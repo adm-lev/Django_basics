@@ -4,12 +4,6 @@ from django.views import View
 from django.views.generic import TemplateView
 
 
-class HelloWorldViews(View):
-    @staticmethod
-    def get(*args):
-        return HttpResponse("Hello World")
-
-
 class MainPageView(TemplateView):
     template_name = "mainapp/index.html"
 
