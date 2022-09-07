@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config.conf_file import secret_key
+from config.conf_file import secret_key, auth_secret, auth_key, vk_auth_key, vk_auth_secret
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mainapp",
+    'authapp',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +66,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'mainapp.context_processors.example.simple_context_processor'
+                'mainapp.context_processors.example.simple_context_processor',
+                'django.template.context_processors.media',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
 
         },
@@ -129,3 +134,30 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+#  Media files
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'authapp.CustomUser'
+
+LOGIN_REDIRECT_URL = 'mainapp:index'
+LOGOUT_REDIRECT_URL = 'mainapp:index'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.vk.VKOAuth2',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = auth_key
+
+SOCIAL_AUTH_GITHUB_SECRET = auth_secret
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth_key
+
+SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth_secret
+
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
