@@ -1,0 +1,41 @@
+[
+  {
+    "model": "mainapp.lesson",
+    "pk": "64",
+    "fields": {
+      "course": 6,
+      "num": 4,
+      "title": "Lesson 4",
+      "description": "Описание урока",
+      "description_as_markdown": false,
+      "created": "2021-07-11T12:53:26.833Z",
+      "updated": "2021-07-11T12:53:26.833Z"
+    }
+  },
+  {
+    "model": "mainapp.lesson",
+    "pk": "65",
+    "fields": {
+      "course": 6,
+      "num": 5,
+      "title": "Lesson 5",
+      "description": "Описание урока",
+      "description_as_markdown": false,
+      "created": "2021-07-11T12:53:26.832Z",
+      "updated": "2021-07-11T12:53:26.832Z"
+    }
+  },
+  {
+    "model": "mainapp.lesson",
+    "pk": "66",
+    "fields": {
+      "course": 6,
+      "num": 6,
+      "title": "Lesson 6",
+      "description": "Описание урока",
+      "description_as_markdown": false,
+      "created": "2021-07-11T12:53:26.833Z",
+      "updated": "2021-07-11T12:53:26.833Z"
+    }
+  }
+]
