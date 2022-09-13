@@ -26,18 +26,19 @@ aria-expanded="false">
 Профиль
 </a>
 <div class="dropdown-menu" aria-labelledby="ddProfile">
-    <a class="dropdown-item" href="{% url 'authapp:profile_edit' %}">Редактировать
-профиль</a>
-<a class="dropdown-item" href="#">Мои курсы</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">Модерация</a>
-<a class="dropdown-item" href="#">Административный
-раздел</a>
+
 <div class="dropdown-divider"></div>
  {% if user.is_authenticated %}
-<a class="dropdown-item" href="{% url 'authapp:logout' %}">Выход</a>
+    <a class="dropdown-item" href="#">Мои курсы</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">Модерация</a>
+<a class="dropdown-item" href="{% url 'admin:index' %}">Административный
+раздел</a>
+    <a class="dropdown-item" href="{% url 'authapp:profile_edit' pk=request.user.pk %}">Редактировать
+профиль</a>
+    <a class="dropdown-item" href="{% url 'authapp:logout' %}">Выход</a>
  {% else %}
-<a class="dropdown-item" href="{% url 'authapp:login' %}">Вход</a>
+    <a class="dropdown-item" href="{% url 'authapp:login' %}">Вход</a>
  {% endif %}
 
 </div>
