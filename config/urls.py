@@ -9,6 +9,7 @@ from mainapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
     path("", RedirectView.as_view(url="mainapp/")),
     path("mainapp/", include("mainapp.urls", namespace='mainapp')),
     path('authapp/', include('authapp.urls', namespace='authapp')),
@@ -18,6 +19,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 
 
