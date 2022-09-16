@@ -11,20 +11,24 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config.conf_file import secret_key, auth_secret, auth_key, vk_auth_key, vk_auth_secret
+# from config.conf_file import secret_key, auth_secret, auth_key, vk_auth_key, vk_auth_secret
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,9 +36,9 @@ if DEBUG:
     INTERNAL_IPS = [
         '127.0.0.1',
         '192.168.1.106',
-
     ]
 
+ENV_TYPE = os.getenv('ENV_TYPE', 'prod')
 
 # Application definition
 
@@ -94,14 +98,21 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if ENV_TYPE == 'local':
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'lms',
+            'USER': 'postgres'
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -165,13 +176,13 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',
 )
 
-SOCIAL_AUTH_GITHUB_KEY = auth_key
+SOCIAL_AUTH_GITHUB_KEY = os.getenv('GITHUB_KEY')
 
-SOCIAL_AUTH_GITHUB_SECRET = auth_secret
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv('GITHUB_SECRET')
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = vk_auth_key
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('VK_AUTH_KEY')
 
-SOCIAL_AUTH_VK_OAUTH2_SECRET = vk_auth_secret
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('VK_AUTH_SECRET')
 
 # SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 
